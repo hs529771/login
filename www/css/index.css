@@ -317,3 +317,10 @@ button {
        width: 100%;
     }
 }
+.phone {
+    margin: 0 0 9px 0;
+    width: 85%;
+}
+.gender {
+    margin: 0 0 16px 0;
+}

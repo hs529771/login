@@ -26,21 +26,27 @@ var app = {
     var email = $("#email").val();
     var pass = $("#password").val();
     var repass = $("#repassword").val();      
-
-    if(email == '' || pass == ''){
+    var fullname = $("#fname").val();
+    var phno = $("#phone").val();
+   var verifyemail= app.validateEmail(email);
+    var gen = $("input[name='gender']:checked").val();
+    if(email == '' || pass == '' || fullname == '' || phno =='') {
         alert("Fill all fields.");
     }
     else if(pass != repass) {
       alert("password not match")
   }
+  else if(verifyemail == false) {
+   return false;
+  }
   else {
       dir.create('test', Log('created successfully'), Log('something went wrong'));
-      var data1 = '[{"email": '+email+', "password": '+pass+'}]';
+      var data1 = '[{"Fullname": "'+fullname+'","email": "'+email+'", "password": "'+pass+'", "phone": "'+phno+'", "gender": "'+gen+'"}]';
       file.readFile('test', 'signup.json', function(result) {
         if(result != '') {
 
          result = result.slice(0,-1);
-         var data = ',{"email": '+email+', "password": '+pass+'}]';
+         var data = ',{"Fullname": "'+fullname+'", "email": "'+email+'", "password": "'+pass+'", "phone": "'+phno+'", "gender": "'+gen+'"}]';
           data = result.concat(data);
 
           file.writeFile('test', 'signup.json', data, function(result) {
@@ -57,28 +63,41 @@ var app = {
 
     login:function() {
         var email1 = $("#username").val();
-        var pass2 = $("#psw").val();
+        var pass = $("#psw").val();
 
-        if(email1 == '' || pass2 == '') {
+        if(email1 == '' || pass == '') {
             alert("Fill all fields.");
         }
         else {
       file.readFile('test', 'signup.json', function(result) {
-        // if() {
-          alert("hello");
-        // }
-      },Log('something went wrong!'), "ExternalAppStorageDir");
+        var obj = JSON.parse(result);
+        var flag = false;
+        for (var key in obj) {
+          var email = obj[key]['email'];
+          var password = obj[key]['password'];
+          if(email == email1 && password == pass ){
+            flag = true;
+            alert("hello "+email);
+           
+            break;
+          }
         }
+         if(flag == false) {
+          alert("invalid username or password.");
+         }
+      },Log('something went wrong!'), "ExternalAppStorageDir");
+    }
       },
-  // //           //  else {
-  // //           //     alert(data);
-  // //           //    }
 
-  // //              // file.readFile('signup', 'signup.json', function(data) {
-  // //               //    console.log(data);
-  // //               // }, Log('something went wrong'), "ExternalAppStorageDir");
+  validateEmail: function(emailField){
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test(emailField.value) == false) 
+        {
+            alert('Invalid Email Address');
+            return false;
+        }
+        return true;
 
-  // //              // alert("data");  
-  // //          }
-
-       };
+},  
+    };
+app.initialize();

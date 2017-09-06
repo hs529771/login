@@ -55,35 +55,62 @@
 
     <div id="id02" class="model">
       <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">×</span>
-      <form class="modal-content animate1" action="">
+      <form class="modal-content animate" action="">
         <div class="container">
+        <label>Full name</label>
+    <input type="text" id="fname" placeholder="Fullname" name="fname" required="">
           <label><b>Email</b></label>
-          <input type="text" id="email" placeholder="Enter Email" name="email"  pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*" required>
+           <input type="text" id="email" placeholder="Enter Email" name="email" 
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" onblur="app.validateEmail(this);"" required="">
 
           <label><b>Password</b></label>
           <input type="password" id="password" placeholder="Enter Password" name="psw" required>
 
           <label><b>Repeat Password</b></label>
-          <input type="password" id="repassword" placeholder="Repeat Password" name="psw-repeat" required>
+          <input type="password" id="repassword" placeholder="Repeat Password" name="psw-repeat" required="">
+          <div class="gender">
+           
+           <input type="radio" name="gender" value="male" id="gender"> Male
+           <input type="radio" name="gender" value="female" id="gender"> Female<br>
+          </div> 
+          <label>Phone no.</label>
+           <input type="tel" name="usrtel" class="phone" id="phone">
+          <label>Date of Birth:</label>
+          <input type="date" name="date" id="date">
           <input type="checkbox" checked="checked"> Remember me
           <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
           <div class="clearfix">
             <button type="button" class="cancelbtn" onclick="document.getElementById('id02').style.display='none'" >Cancel</button>
-            <input type="button" class="signupbtn" value="Sign up" onclick="app.signu();" >
+        <input type="button" class="signupbtn" value="Sign up" onclick="app.signu();" >
           </div>
         </div>
       </form>
     </div>
   </div>
 
-
+<script>
+    $('.modal-content animate').validate();
+    </script>
   <script type="text/javascript" src="js/file.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   <script type="text/javascript" src="js/var.js"></script>
   <script type="text/javascript" src="cordova.js"></script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
+<script>
+function validateEmail(emailField){
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
+        if (reg.test(emailField.value) == false) 
+        {
+            alert('Invalid Email Address');
+            return false;
+        }
+
+        return true;
+
+}
+</script>
 </body>
 
 </html>
