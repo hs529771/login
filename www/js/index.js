@@ -71,20 +71,34 @@ var app = {
         else {
       file.readFile('test', 'signup.json', function(result) {
         var obj = JSON.parse(result);
+          
+         //fetch object
+     
         var flag = false;
         for (var key in obj) {
           var email = obj[key]['email'];
           var password = obj[key]['password'];
           if(email == email1 && password == pass ){
             flag = true;
-            alert("hello "+email);
-           
-            break;
+            localStorage.setItem("email",obj[key]['email']);
+            localStorage.setItem("FullName",obj[key]['Fullname']);
+            localStorage.setItem("Phone",obj[key]['phone']);
+            localStorage.setItem("Gender",obj[key]['gender']);
+
+            window.location.href="logout.html";
+
+
+            // document.write(localStorage.getItem("FullName"));
+            // document.write(localStorage.getItem("email"));
+            // document.write(localStorage.getItem("Phone-No."));
+            // document.write(localStorage.getItem("Gender"));
+          
+
           }
         }
          if(flag == false) {
           alert("invalid username or password.");
-         }
+         } 
       },Log('something went wrong!'), "ExternalAppStorageDir");
     }
       },
@@ -99,5 +113,12 @@ var app = {
         return true;
 
 },  
+// logout: function() {
+
+//   window.localStorage.clear();
+//   window.location.href="index.html";
+  
+// },
+   
     };
 app.initialize();
